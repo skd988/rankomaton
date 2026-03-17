@@ -215,11 +215,11 @@ document.addEventListener('DOMContentLoaded', () =>
             comparisonCounter.innerText = save.length + 1;
             firstCompareeButton.innerText = first;
             secondCompareeButton.innerText = second;
-            firstCompareeButton.addEventListener('mousedown', firstButtonFn);
-            secondCompareeButton.addEventListener('mousedown', secondButtonFn);
-            backButton.addEventListener('mousedown', backFn);
-            rankListButton.addEventListener('mousedown', resortingFn);
-            stopButton.addEventListener('mousedown', stopFn);
+            firstCompareeButton.addEventListener('pointerdown', firstButtonFn);
+            secondCompareeButton.addEventListener('pointerdown', secondButtonFn);
+            backButton.addEventListener('pointerdown', backFn);
+            rankListButton.addEventListener('pointerdown', resortingFn);
+            stopButton.addEventListener('pointerdown', stopFn);
             document.addEventListener('keydown', inputCompareKeysFn);
 
             unhideElement(comparisonElement);
@@ -236,10 +236,10 @@ document.addEventListener('DOMContentLoaded', () =>
         .finally(() => 
         {
             document.removeEventListener('keydown', inputCompareKeysFn);
-            backButton.removeEventListener('mousedown', backFn);
-            firstCompareeButton.removeEventListener('mousedown', firstButtonFn);
-            secondCompareeButton.removeEventListener('mousedown', secondButtonFn);
-            rankListButton.removeEventListener('mousedown', resortingFn);
+            backButton.removeEventListener('pointerdown', backFn);
+            firstCompareeButton.removeEventListener('pointerdown', firstButtonFn);
+            secondCompareeButton.removeEventListener('pointerdown', secondButtonFn);
+            rankListButton.removeEventListener('pointerdown', resortingFn);
         });
     };
 
@@ -292,8 +292,8 @@ document.addEventListener('DOMContentLoaded', () =>
     });
 
     
-    clearListButton.addEventListener('mousedown', clearListButtonFn);
-    rankListButton.addEventListener('mousedown', rankListButtonFn);
-    shareButton.addEventListener('mousedown', share);
-    copyButton.addEventListener('mousedown', copyResults);
+    clearListButton.addEventListener('pointerdown', clearListButtonFn);
+    rankListButton.addEventListener('pointerdown', rankListButtonFn);
+    shareButton.addEventListener('pointerdown', share);
+    copyButton.addEventListener('pointerdown', copyResults);
 });
