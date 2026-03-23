@@ -2,6 +2,10 @@ html {
 	scrollbar-gutter: stable;
 }
 
+html * {
+	touch-action: manipulation;
+}
+
 .flex {
 	display: flex;
 }
