@@ -12,24 +12,38 @@
             <div class="flex flex-col list-container">
                 <h1 class="subtitle">List</h1>
                 <textarea id="list" class="larger-font" rows="20"></textarea>
-                <div class="flex space-between wrap">
+                <div class="flex space-evenly wrap">
                     <button id="clear-list-button">Clear</button>
                     <button id="rank-list-button">Rank!</button>
                     <button id="share-button">Share</button>
                 </div>
-                <div class="align-center">
-                    <label id="shuffle-label" class="text-from-button">
-                        <input id="shuffle" type="checkbox" checked>
-                        Shuffle
-                    </label>
+                <div id="shuffle-and-share-link" class="flex space-evenly wrap">
+                    <div class="around-flex"></div>
+                    <div class="text-center center-flex">
+                        <label id="shuffle-label" class="text-from-button">
+                            <input id="shuffle" type="checkbox" checked>
+                            Shuffle
+                        </label>
+                    </div>
+                    <div class="text-center around-flex">
+                        <a id="link" class="text-center larger-font bold-font invisible" href="">Sharing link!</a>
+                    </div>
                 </div>
-                <div class="align-center">
-                    <a id="link" class="text-center larger-font bold-font invisible" href="">Sharing link!</a>
+                <div id="shortcuts">
+                    <h3 class="no-margin">Keyboard Shortcuts:</h3>
+                    <ul>
+                        <li><b>Ctrl+Enter</b>: Start rank</li>
+                        <li><b>Up arrow</b>: Choose up choice</li>
+                        <li><b>Down arrow</b>: Choose down choice</li>
+                        <li><b>Left arrow/Ctrl+B</b>: Back last choice</li>
+                        <li><b>Right arrow/Ctrl+R</b>: Random choice</li>
+                        <li><b>Ctrl+S</b>: Stop rank</li>
+                    </ul>
                 </div>
             </div>
             <div class="flex center-container">
                 <div class="hidden">
-                    <div class="flex space-between">
+                    <div class="flex space-evenly">
                         <h1 class="subtitle">Results</h1>
                         <button id="copy-button">Copy results</button>
                     </div>

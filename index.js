@@ -187,16 +187,24 @@ document.addEventListener('DOMContentLoaded', () =>
             
             inputCompareKeysFn = e => 
             {
+                if(!e.ctrlKey && document.activeElement === listElement)
+                    return;
+                
                 const key = e.key;
                 if(key === 'ArrowUp')
                 {
-                    e.preventDefault()
+                    e.preventDefault();
                     resolve(true);
                 }
                 else if(key === 'ArrowDown')
                 {
-                    e.preventDefault()
+                    e.preventDefault();
                     resolve(false);
+                }
+                else if(e.ctrlKey && (key === 'r' || key === 'R') || key === 'ArrowRight')
+                {
+                    e.preventDefault();
+                    resolve(Math.round(Math.random())? true : false);
                 }
                 else if(e.ctrlKey && (key === 'b' || key === 'B') || key === 'ArrowLeft')
                 {
