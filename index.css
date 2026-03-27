@@ -41,6 +41,10 @@ html {
 	font-size: 1.5rem;
 }
 
+#results-container {
+	flex: 6 1 0;
+}
+
 .align-center {
 	align-self: center;
 }
@@ -107,6 +111,16 @@ html {
 	#shortcuts {
 		display: none;
 	}
+
+	#after-rank-buttons {
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+}
+
+#after-rank-buttons {
+	justify-content: center;
+	max-height: 50%;
 }
 
 #results

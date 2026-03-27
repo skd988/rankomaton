@@ -27,6 +27,7 @@ const loadConfig = () =>
     catch(e)
     {
         console.error(e);
+        config = {};
     }
 
     return config;
@@ -37,8 +38,8 @@ const copyToClipboard = text =>
     navigator.clipboard.writeText(text);
 };
 
-const hideElement = elem => elem.classList.add('hidden');
-const unhideElement = elem => elem.classList.remove('hidden');
+const hideElements = elems => (Array.isArray(elems)? elems : [elems]).forEach(elem => elem.classList.add('hidden'));
+const unhideElements = elems => (Array.isArray(elems)? elems : [elems]).forEach(elem => elem.classList.remove('hidden'));
 
 document.addEventListener('DOMContentLoaded', () => 
 {
@@ -50,9 +51,14 @@ document.addEventListener('DOMContentLoaded', () =>
     const rankListButton = document.querySelector('#rank-list-button');
     const clearListButton = document.querySelector('#clear-list-button');
     const backButton = document.querySelector('#back-button');
+    const afterBackButton = document.querySelector('#after-back-button');
+    const resetButton = document.querySelector('#reset-button');
     const shareButton = document.querySelector('#share-button');
     const copyButton = document.querySelector('#copy-button');
     const resultsElement = document.querySelector('#results');
+    const resultsContainerElement = document.querySelector('#results-container');
+    const historyContainerElement = document.querySelector('#history-container');
+    const afterRankButtonsElement = document.querySelector('#after-rank-buttons')
     const infoElement = document.querySelector('#info');
     const shuffleCheckbox = document.querySelector('#shuffle');
     const linkElement = document.querySelector('#link');
@@ -73,10 +79,7 @@ document.addEventListener('DOMContentLoaded', () =>
     {
         resultsElement.innerHTML = '';
         historyElement.innerHTML = '';
-        hideElement(historyElement.parentElement);
-        hideElement(resultsElement.parentElement);
-        hideElement(infoElement);
-        hideElement(comparisonElement);
+        hideElements([historyContainerElement, resultsContainerElement, comparisonElement, afterRankButtonsElement]);
     };
 
     const getInputList = () => 
@@ -93,13 +96,12 @@ document.addEventListener('DOMContentLoaded', () =>
         infoElement.appendChild(createElementFromHtml(`<p>List's length: ${size}</p>`));
         infoElement.appendChild(createElementFromHtml(`<p>Comparisons Range: ${range[0]}-${range[1]}</p>`));
         infoElement.appendChild(createElementFromHtml(`<p>Comparisons Average: ${avg.toFixed(2)}</p>`));
-        unhideElement(infoElement);
     };
 
     const rankList = async list =>
     {
         clearChangingElements();
-        unhideElement(historyElement.parentElement);
+        unhideElements(historyContainerElement);
         renderComparisons(list.length);
         if(save === null)
             save = [];
@@ -107,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () =>
         {
             clearChangingElements();
             sorted.forEach(val => resultsElement.appendChild(createElementFromHtml(`<li>${val}</li>`)));
-            unhideElement(resultsElement.parentElement);
+            unhideElements([resultsContainerElement, afterRankButtonsElement]);
         })
         .catch(e => 
         {
@@ -127,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () =>
             rankList(listToRank);
         }
     };
-    
+
     const stopButtonFn = async () =>
     {
         clearChangingElements();
@@ -223,14 +225,14 @@ document.addEventListener('DOMContentLoaded', () =>
             comparisonCounter.innerText = save.length + 1;
             firstCompareeButton.innerText = first;
             secondCompareeButton.innerText = second;
-            firstCompareeButton.addEventListener('pointerdown', firstButtonFn);
-            secondCompareeButton.addEventListener('pointerdown', secondButtonFn);
-            backButton.addEventListener('pointerdown', backFn);
-            rankListButton.addEventListener('pointerdown', resortingFn);
-            stopButton.addEventListener('pointerdown', stopFn);
+            firstCompareeButton.addEventListener('pointerup', firstButtonFn);
+            secondCompareeButton.addEventListener('pointerup', secondButtonFn);
+            backButton.addEventListener('pointerup', backFn);
+            rankListButton.addEventListener('pointerup', resortingFn);
+            stopButton.addEventListener('pointerup', stopFn);
             document.addEventListener('keydown', inputCompareKeysFn);
 
-            unhideElement(comparisonElement);
+            unhideElements(comparisonElement);
         })
         .then(answer =>
         {
@@ -244,10 +246,10 @@ document.addEventListener('DOMContentLoaded', () =>
         .finally(() => 
         {
             document.removeEventListener('keydown', inputCompareKeysFn);
-            backButton.removeEventListener('pointerdown', backFn);
-            firstCompareeButton.removeEventListener('pointerdown', firstButtonFn);
-            secondCompareeButton.removeEventListener('pointerdown', secondButtonFn);
-            rankListButton.removeEventListener('pointerdown', resortingFn);
+            backButton.removeEventListener('pointerup', backFn);
+            firstCompareeButton.removeEventListener('pointerup', firstButtonFn);
+            secondCompareeButton.removeEventListener('pointerup', secondButtonFn);
+            rankListButton.removeEventListener('pointerup', resortingFn);
         });
     };
 
@@ -261,11 +263,17 @@ document.addEventListener('DOMContentLoaded', () =>
         linkElement.href = link;
         linkElement.classList.remove('invisible')
         copyToClipboard(link);
+        shareButton.setAttribute('style', `text-align: center; font-size: ${0.88 * parseFloat(window.getComputedStyle(shareButton, null).getPropertyValue('font-size'))}px; width:${shareButton.getBoundingClientRect().width}px`)
+        shareButton.innerText = 'Copied!';
+        setTimeout(() => {shareButton.setAttribute('style', ''); shareButton.innerText = 'Share'}, 1000) 
     };
     
     const copyResults = () =>
     {
         copyToClipboard(Array.from(resultsElement.childNodes).map((res, index) => (index + 1) + '. ' + res.innerText).join('\n'));
+        copyButton.setAttribute('style', `width:${copyButton.getBoundingClientRect().width}px`)
+        copyButton.innerText = 'Copied!';
+        setTimeout(() => {copyButton.setAttribute('style', ''); copyButton.innerText = 'Copy results'}, 1000) 
     };
 
     const rankFromConfig = () =>
@@ -298,10 +306,11 @@ document.addEventListener('DOMContentLoaded', () =>
         if(e.ctrlKey && key === 'Enter')
             rankListButtonFn();
     });
-
     
-    clearListButton.addEventListener('pointerdown', clearListButtonFn);
-    rankListButton.addEventListener('pointerdown', rankListButtonFn);
-    shareButton.addEventListener('pointerdown', share);
-    copyButton.addEventListener('pointerdown', copyResults);
+    clearListButton.addEventListener('pointerup', clearListButtonFn);
+    rankListButton.addEventListener('pointerup', rankListButtonFn);
+    shareButton.addEventListener('pointerup', share);
+    copyButton.addEventListener('pointerup', copyResults);
+    afterBackButton.addEventListener('pointerup', backButtonFn);
+    resetButton.addEventListener('pointerup', stopButtonFn);
 });
