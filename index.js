@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () =>
     const resultsElement = document.querySelector('#results');
     const resultsContainerElement = document.querySelector('#results-container');
     const historyContainerElement = document.querySelector('#history-container');
-    const afterRankButtonsElement = document.querySelector('#after-rank-buttons')
     const infoElement = document.querySelector('#info');
     const shuffleCheckbox = document.querySelector('#shuffle');
     const linkElement = document.querySelector('#link');
@@ -80,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () =>
     {
         resultsElement.innerHTML = '';
         historyElement.innerHTML = '';
-        hideElements([historyContainerElement, resultsContainerElement, comparisonElement, afterRankButtonsElement]);
+        hideElements([historyContainerElement, resultsContainerElement, comparisonElement]);
     };
 
     const getInputList = () => 
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () =>
         {
             clearChangingElements();
             sorted.forEach(val => resultsElement.appendChild(createElementFromHtml(`<li>${val}</li>`)));
-            unhideElements([resultsContainerElement, afterRankButtonsElement]);
+            unhideElements([resultsContainerElement]);
         })
         .catch(e => 
         {
@@ -206,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () =>
                     e.preventDefault();
                     resolve(false);
                 }
-                else if(e.ctrlKey && (key === 'r' || key === 'R') || key === 'ArrowRight')
+                else if(e.ctrlKey && (key === 'r' || key === 'R') || key === 'ArrowRight' || key === ' ')
                 {
                     e.preventDefault();
                     resolve(Math.round(Math.random())? true : false);
@@ -221,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () =>
                     e.preventDefault()
                     stopFn();
                 }
-                else if(e.ctrlKey && key === 'Enter')
+                else if(e.ctrlKey && key === 'Enter' || key === ' ')
                     resortingFn();
             };
 
@@ -308,6 +307,8 @@ document.addEventListener('DOMContentLoaded', () =>
 
     document.addEventListener('keydown', e => 
     {
+        if(!e.ctrlKey && document.activeElement === listElement)
+            return;
         const key = e.key;
         if(e.ctrlKey && key === 'Enter')
             rankListButtonFn();

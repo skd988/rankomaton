@@ -121,20 +121,10 @@ html {
 		display: none;
 	}
 
-	#after-rank-buttons {
-		flex-direction: row;
-		justify-content: space-evenly;
-	}
-
 	#about {
 		max-width: 100%;
 		margin-left: 0;
 	}
-}
-
-#after-rank-buttons {
-	justify-content: center;
-	max-height: 50%;
 }
 
 #results
