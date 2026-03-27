@@ -44,6 +44,7 @@ const unhideElements = elems => (Array.isArray(elems)? elems : [elems]).forEach(
 document.addEventListener('DOMContentLoaded', () => 
 {
     const listElement = document.querySelector('#list');
+    const aboutElement = document.querySelector('#about');
     const firstCompareeButton = document.querySelector('#first-comparee-button');
     const secondCompareeButton = document.querySelector('#second-comparee-button');
     const stopButton = document.querySelector('#stop-button');
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () =>
     const rankListButton = document.querySelector('#rank-list-button');
     const clearListButton = document.querySelector('#clear-list-button');
     const backButton = document.querySelector('#back-button');
-    const afterBackButton = document.querySelector('#after-back-button');
+    const afterRankBackButton = document.querySelector('#after-back-button');
     const resetButton = document.querySelector('#reset-button');
     const shareButton = document.querySelector('#share-button');
     const copyButton = document.querySelector('#copy-button');
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () =>
     {
         clearChangingElements();
         unhideElements(historyContainerElement);
+        hideElements(aboutElement);
         renderComparisons(list.length);
         if(save === null)
             save = [];
@@ -133,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () =>
     const stopButtonFn = async () =>
     {
         clearChangingElements();
+        unhideElements(aboutElement);
         list = [];
         save = null;
         permutation = null;
@@ -263,9 +266,12 @@ document.addEventListener('DOMContentLoaded', () =>
         linkElement.href = link;
         linkElement.classList.remove('invisible')
         copyToClipboard(link);
-        shareButton.setAttribute('style', `text-align: center; font-size: ${0.88 * parseFloat(window.getComputedStyle(shareButton, null).getPropertyValue('font-size'))}px; width:${shareButton.getBoundingClientRect().width}px`)
-        shareButton.innerText = 'Copied!';
-        setTimeout(() => {shareButton.setAttribute('style', ''); shareButton.innerText = 'Share'}, 1000) 
+        if(!shareButton.getAttribute('style'))
+        {
+            shareButton.setAttribute('style', `text-align: center; font-size: ${0.88 * parseFloat(window.getComputedStyle(shareButton, null).getPropertyValue('font-size'))}px; width:${shareButton.getBoundingClientRect().width}px`)
+            shareButton.innerText = 'Copied!';
+            setTimeout(() => {shareButton.setAttribute('style', ''); shareButton.innerText = 'Share'}, 1000) 
+        }
     };
     
     const copyResults = () =>
@@ -311,6 +317,6 @@ document.addEventListener('DOMContentLoaded', () =>
     rankListButton.addEventListener('pointerup', rankListButtonFn);
     shareButton.addEventListener('pointerup', share);
     copyButton.addEventListener('pointerup', copyResults);
-    afterBackButton.addEventListener('pointerup', backButtonFn);
+    afterRankBackButton.addEventListener('pointerup', backButtonFn);
     resetButton.addEventListener('pointerup', stopButtonFn);
 });

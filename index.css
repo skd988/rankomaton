@@ -41,8 +41,17 @@ html {
 	font-size: 1.5rem;
 }
 
+#about {
+	max-width: 50%;
+	margin-left: auto; 
+}
+
+#about > p {
+	font-size: large;
+}
+
 #results-container {
-	flex: 6 1 0;
+	flex: 5 1 0;
 }
 
 .align-center {
@@ -115,6 +124,11 @@ html {
 	#after-rank-buttons {
 		flex-direction: row;
 		justify-content: space-evenly;
+	}
+
+	#about {
+		max-width: 100%;
+		margin-left: 0;
 	}
 }
 
