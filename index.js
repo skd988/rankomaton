@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () =>
     const backButton = document.querySelector('#back-button');
     const afterRankBackButton = document.querySelector('#after-back-button');
     const resetButton = document.querySelector('#reset-button');
-    const shareButton = document.querySelector('#share-button');
+    const saveButton = document.querySelector('#save-button');
     const copyButton = document.querySelector('#copy-button');
     const resultsElement = document.querySelector('#results');
     const resultsContainerElement = document.querySelector('#results-container');
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () =>
         });
     };
 
-    const share = () =>
+    const saveFn = () =>
     {
         config['list'] = list.length? list : getInputList();
         config['save'] = save? save.map(i => +i) : null;
@@ -265,11 +265,11 @@ document.addEventListener('DOMContentLoaded', () =>
         linkElement.href = link;
         linkElement.classList.remove('invisible')
         copyToClipboard(link);
-        if(!shareButton.getAttribute('style'))
+        if(!saveButton.getAttribute('style'))
         {
-            shareButton.setAttribute('style', `text-align: center; font-size: ${0.88 * parseFloat(window.getComputedStyle(shareButton, null).getPropertyValue('font-size'))}px; width:${shareButton.getBoundingClientRect().width}px`)
-            shareButton.innerText = 'Copied!';
-            setTimeout(() => {shareButton.setAttribute('style', ''); shareButton.innerText = 'Share'}, 1000) 
+            saveButton.setAttribute('style', `text-align: center; font-size: ${0.8 * parseFloat(window.getComputedStyle(saveButton, null).getPropertyValue('font-size'))}px; width:${saveButton.getBoundingClientRect().width}px`)
+            saveButton.innerText = 'Copied!';
+            setTimeout(() => {saveButton.setAttribute('style', ''); saveButton.innerText = 'Save'}, 1000) 
         }
     };
     
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', () =>
     
     clearListButton.addEventListener('pointerup', clearListButtonFn);
     rankListButton.addEventListener('pointerup', rankListButtonFn);
-    shareButton.addEventListener('pointerup', share);
+    saveButton.addEventListener('pointerup', saveFn);
     copyButton.addEventListener('pointerup', copyResults);
     afterRankBackButton.addEventListener('pointerup', backButtonFn);
     resetButton.addEventListener('pointerup', stopButtonFn);
