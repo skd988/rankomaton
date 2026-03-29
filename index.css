@@ -107,11 +107,7 @@ html {
 	.main-container {
 		flex-direction: column;
 	}
-
-	.center-container {
-		gap: 1rem;
-		flex-direction: column;
-	}
+	
 	#shortcuts {
 		display: none;
 	}
